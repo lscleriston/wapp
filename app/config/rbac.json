@@ -1,0 +1,67 @@
+{
+  "default_policy": {
+    "allow_unregistered": false,
+    "default_scopes": []
+  },
+  "users": {
+    "556198379503": {
+      "name": "Cleriston (Admin)",
+      "role": "admin",
+      "allowed_scopes": ["*"],
+      "description": "Acesso total a todos os órgãos, contratos e métricas corporativas."
+    },
+    "5561998379503": {
+      "name": "Cleriston (Admin Celular)",
+      "role": "admin",
+      "allowed_scopes": ["*"],
+      "description": "Acesso total a todos os órgãos, contratos e métricas corporativas."
+    }
+  },
+  "scope_definitions": {
+    "incra": {
+      "name": "INCRA / Cervello",
+      "tables": ["vw_bi_chamados_incra", "tb_cervello_chamados_incra", "vw_bi_telefonia_resumo"],
+      "keywords": ["incra", "cervello", "reforma agraria", "chamados incra"]
+    },
+    "prf": {
+      "name": "Polícia Rodoviária Federal (PRF)",
+      "tables": ["vw_bi_tickets_prf", "vw_glpi_ticket_dprf"],
+      "keywords": ["prf", "dprf", "rodoviaria", "policia rodoviaria", "rodovia"]
+    },
+    "caesb": {
+      "name": "CAESB (Saneamento Ambiental)",
+      "tables": ["vw_bi_tickets_caesb", "vw_glpi_ticket_caesb"],
+      "keywords": ["caesb", "saneamento", "agua", "esgoto"]
+    },
+    "glpi": {
+      "name": "GLPI Geral",
+      "tables": ["vw_bi_glpi_tickets", "tb_glpi_ticket"],
+      "keywords": ["glpi", "tickets", "ti", "infra", "chamados ti"]
+    },
+    "dnit": {
+      "name": "DNIT (Infraestrutura de Transportes)",
+      "tables": ["vw_bi_tickets_dnit", "vw_glpi_ticket_dnit"],
+      "keywords": ["dnit", "transporte", "rodovias"]
+    },
+    "dpu": {
+      "name": "DPU (Defensoria Pública da União)",
+      "tables": ["vw_bi_tickets_dpu", "vw_glpi_ticket_dpu"],
+      "keywords": ["dpu", "defensoria"]
+    },
+    "fnde": {
+      "name": "FNDE (Educação)",
+      "tables": ["vw_bi_tickets_fnde", "vw_glpi_ticket_fnde"],
+      "keywords": ["fnde", "educacao"]
+    },
+    "mj": {
+      "name": "Ministério da Justiça (Citsmart)",
+      "tables": ["vw_bi_tickets_mj", "vw_citsmart_ticket_mj"],
+      "keywords": ["mj", "ministerio da justica", "justica"]
+    },
+    "telefonia": {
+      "name": "Telefonia / Call Center",
+      "tables": ["vw_bi_telefonia_resumo", "tb_telefonia_atendidas", "tb_telefonia_perdidas"],
+      "keywords": ["telefonia", "ligacoes", "chamadas", "atendidas", "perdidas", "abandono"]
+    }
+  }
+}

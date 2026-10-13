@@ -1,0 +1,27 @@
+# Ambientes Virtuais e Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+
+# Configurações e Segredos
+.env
+*.pem
+*.key
+id_*
+
+# Logs e Dados Temporários
+*.log
+scratch/
+check_audit.py
+bench_*.py
+debug_*.py
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo

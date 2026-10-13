@@ -1,0 +1,152 @@
+[
+  {
+    "id": 1,
+    "scope": "prf",
+    "question": "Quantos chamados temos na PRF?",
+    "sql": "SELECT COUNT(*) AS total FROM dw_positivo.vw_bi_tickets_prf;"
+  },
+  {
+    "id": 2,
+    "scope": "prf",
+    "question": "Quantos chamados abertos temos na PRF?",
+    "sql": "SELECT COUNT(*) AS total_abertos FROM dw_positivo.vw_bi_tickets_prf WHERE fl_encerrado = false;"
+  },
+  {
+    "id": 3,
+    "scope": "prf",
+    "question": "Quantos chamados foram fechados na PRF este mês?",
+    "sql": "SELECT COUNT(*) AS fechados_mes FROM dw_positivo.vw_bi_tickets_prf WHERE fl_encerrado = true AND data_fechamento >= DATE_TRUNC('month', CURRENT_DATE);"
+  },
+  {
+    "id": 4,
+    "scope": "prf",
+    "question": "Quais as principais categorias de chamados na PRF?",
+    "sql": "SELECT categoria, COUNT(*) AS total FROM dw_positivo.vw_bi_tickets_prf WHERE categoria IS NOT NULL GROUP BY categoria ORDER BY total DESC LIMIT 5;"
+  },
+  {
+    "id": 5,
+    "scope": "prf",
+    "question": "Qual o tempo médio de atendimento (TMA) na PRF?",
+    "sql": "SELECT ROUND(AVG(tempo_atendimento_segundos) / 60.0, 1) AS tma_minutos FROM dw_positivo.vw_bi_tickets_prf WHERE tempo_atendimento_segundos > 0;"
+  },
+  {
+    "id": 6,
+    "scope": "incra",
+    "question": "Quantos chamados temos na base do Cervello do Incra?",
+    "sql": "SELECT COUNT(*) AS total FROM dw_positivo.vw_bi_chamados_incra;"
+  },
+  {
+    "id": 7,
+    "scope": "incra",
+    "question": "Quantos chamados estão em aberto no Incra?",
+    "sql": "SELECT COUNT(*) AS total_abertos FROM dw_positivo.vw_bi_chamados_incra WHERE fl_encerrado = false;"
+  },
+  {
+    "id": 8,
+    "scope": "incra",
+    "question": "Qual o cumprimento de SLA nos chamados do Incra?",
+    "sql": "SELECT situacao_sla, COUNT(*) AS total FROM dw_positivo.vw_bi_chamados_incra WHERE situacao_sla IS NOT NULL GROUP BY situacao_sla ORDER BY total DESC;"
+  },
+  {
+    "id": 9,
+    "scope": "incra",
+    "question": "Qual o percentual de chamados dentro do SLA no Incra?",
+    "sql": "SELECT ROUND(COUNT(*) FILTER (WHERE fl_dentro_sla = true)::numeric / NULLIF(COUNT(*), 0) * 100, 2) AS taxa_sla_percentual FROM dw_positivo.vw_bi_chamados_incra WHERE situacao_sla IS NOT NULL;"
+  },
+  {
+    "id": 10,
+    "scope": "incra",
+    "question": "Quais setores ou departamentos do Incra têm mais chamados abertos?",
+    "sql": "SELECT departamento, COUNT(*) AS total FROM dw_positivo.vw_bi_chamados_incra WHERE fl_encerrado = false AND departamento IS NOT NULL GROUP BY departamento ORDER BY total DESC LIMIT 5;"
+  },
+  {
+    "id": 11,
+    "scope": "caesb",
+    "question": "Quantos chamados temos na CAESB?",
+    "sql": "SELECT COUNT(*) AS total FROM dw_positivo.vw_bi_tickets_caesb;"
+  },
+  {
+    "id": 12,
+    "scope": "caesb",
+    "question": "Quantos chamados abertos temos na CAESB?",
+    "sql": "SELECT COUNT(*) AS total_abertos FROM dw_positivo.vw_bi_tickets_caesb WHERE fl_encerrado = false;"
+  },
+  {
+    "id": 13,
+    "scope": "telefonia",
+    "question": "Como está o volume de telefonia hoje?",
+    "sql": "SELECT operacao, total_atendidas, total_perdidas, taxa_perda_percentual FROM dw_positivo.vw_bi_telefonia_resumo WHERE data = CURRENT_DATE;"
+  },
+  {
+    "id": 14,
+    "scope": "telefonia",
+    "question": "Qual a taxa de perda telefônica por contrato nos últimos 7 dias?",
+    "sql": "SELECT operacao, SUM(total_atendidas) AS atendidas, SUM(total_perdidas) AS perdidas, ROUND(SUM(total_perdidas)::numeric / NULLIF(SUM(total_chamadas), 0) * 100, 2) AS taxa_perda FROM dw_positivo.vw_bi_telefonia_resumo WHERE data >= CURRENT_DATE - INTERVAL '7 days' GROUP BY operacao ORDER BY taxa_perda DESC;"
+  },
+  {
+    "id": 15,
+    "scope": "telefonia",
+    "question": "Qual o total de chamadas perdidas na telefonia este mês?",
+    "sql": "SELECT operacao, SUM(total_perdidas) AS total_perdidas FROM dw_positivo.vw_bi_telefonia_resumo WHERE data >= DATE_TRUNC('month', CURRENT_DATE) GROUP BY operacao ORDER BY total_perdidas DESC;"
+  },
+  {
+    "id": 16,
+    "scope": "glpi",
+    "question": "Quantos tickets temos no GLPI por contrato?",
+    "sql": "SELECT contrato, COUNT(*) AS total FROM dw_positivo.vw_bi_glpi_tickets GROUP BY contrato ORDER BY total DESC LIMIT 5;"
+  },
+  {
+    "id": 17,
+    "scope": "glpi",
+    "question": "Quantos tickets estão abertos no GLPI geral?",
+    "sql": "SELECT COUNT(*) AS total_abertos FROM dw_positivo.vw_bi_glpi_tickets WHERE fl_encerrado = false;"
+  },
+  {
+    "id": 18,
+    "scope": "prf",
+    "question": "Quantos chamados críticos ou de alta prioridade temos abertos na PRF?",
+    "sql": "SELECT COUNT(*) AS total_criticos FROM dw_positivo.vw_bi_tickets_prf WHERE prioridade >= 4 AND fl_encerrado = false;"
+  },
+  {
+    "id": 19,
+    "scope": "prf",
+    "question": "Quais analistas resolveram mais chamados na PRF?",
+    "sql": "SELECT analista, COUNT(*) AS total_resolvidos FROM dw_positivo.vw_bi_tickets_prf WHERE fl_encerrado = true AND analista IS NOT NULL GROUP BY analista ORDER BY total_resolvidos DESC LIMIT 5;"
+  },
+  {
+    "id": 20,
+    "scope": "incra",
+    "question": "Quantos chamados foram abertos hoje no Incra?",
+    "sql": "SELECT COUNT(*) AS abertos_hoje FROM dw_positivo.vw_bi_chamados_incra WHERE data_abertura >= CURRENT_DATE;"
+  },
+  {
+    "id": 21,
+    "scope": "dnit",
+    "question": "quantos chamados foram fechados no dnit hoje, classifique por analista",
+    "sql": "SELECT COALESCE(analista, 'Não atribuído') AS analista, COUNT(*) AS fechados_hoje FROM dw_positivo.vw_bi_tickets_dnit WHERE (data_fechamento >= CURRENT_DATE OR data_solucao >= CURRENT_DATE) AND fl_encerrado = true GROUP BY analista ORDER BY fechados_hoje DESC;"
+  },
+  {
+    "id": 22,
+    "scope": "dnit",
+    "question": "Quantos chamados abertos temos no DNIT?",
+    "sql": "SELECT COUNT(*) AS total_abertos FROM dw_positivo.vw_bi_tickets_dnit WHERE fl_encerrado = false;"
+  },
+  {
+    "id": 23,
+    "scope": "dnit",
+    "question": "Quais analistas atenderam mais chamados no DNIT este mês?",
+    "sql": "SELECT COALESCE(analista, 'Não atribuído') AS analista, COUNT(*) AS total FROM dw_positivo.vw_bi_tickets_dnit WHERE (data_fechamento >= DATE_TRUNC('month', CURRENT_DATE) OR data_solucao >= DATE_TRUNC('month', CURRENT_DATE)) AND fl_encerrado = true GROUP BY analista ORDER BY total DESC LIMIT 10;"
+  },
+  {
+    "id": 24,
+    "scope": "dpu",
+    "question": "Quantos chamados abertos temos na DPU?",
+    "sql": "SELECT COUNT(*) AS total_abertos FROM dw_positivo.vw_bi_tickets_dpu WHERE fl_encerrado = false;"
+  },
+  {
+    "id": 25,
+    "scope": "mj",
+    "question": "Quantos chamados temos no Ministério da Justiça?",
+    "sql": "SELECT COUNT(*) AS total FROM dw_positivo.vw_bi_tickets_mj;"
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "question": "quantos chamados foram solucionados na última sexta",
+    "scope": "geral",
+    "seed_expected": 598,
+    "ground_truth_query": "SELECT COUNT(*) FROM dw_positivo.vw_bi_glpi_tickets WHERE data_solucao >= '2026-10-09' AND data_solucao < '2026-10-10';"
+  },
+  {
+    "id": 2,
+    "question": "quantos chamados foram solucionados no dnit na última sexta",
+    "scope": "dnit",
+    "seed_expected": 58,
+    "ground_truth_query": "SELECT COUNT(*) FROM dw_positivo.vw_bi_tickets_dnit WHERE data_solucao >= '2026-10-09' AND data_solucao < '2026-10-10';"
+  },
+  {
+    "id": 3,
+    "question": "quantos chamados foram solucionados na ufba na última sexta",
+    "scope": "ufba",
+    "seed_expected": 324,
+    "ground_truth_query": "SELECT COUNT(*) FROM dw_positivo.vw_bi_tickets_ufba WHERE data_solucao >= '2026-10-09' AND data_solucao < '2026-10-10';"
+  },
+  {
+    "id": 4,
+    "question": "qual a data do último chamado solucionado no DNIT",
+    "scope": "dnit",
+    "seed_expected": null,
+    "ground_truth_query": "SELECT TO_CHAR(MAX(data_solucao), 'YYYY-MM-DD') FROM dw_positivo.vw_bi_tickets_dnit WHERE data_solucao IS NOT NULL;"
+  },
+  {
+    "id": 5,
+    "question": "quantos chamados foram abertos no DNIT em 09/10",
+    "scope": "dnit",
+    "seed_expected": null,
+    "ground_truth_query": "SELECT COUNT(*) FROM dw_positivo.vw_bi_tickets_dnit WHERE data_abertura >= '2026-10-09' AND data_abertura < '2026-10-10';"
+  }
+]

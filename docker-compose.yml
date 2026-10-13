@@ -1,0 +1,10 @@
+services:
+  wapp_agent:
+    build: .
+    container_name: wapp_agent
+    restart: always
+    network_mode: "host"
+    env_file:
+      - .env
+    environment:
+      - PYTHONUNBUFFERED=1

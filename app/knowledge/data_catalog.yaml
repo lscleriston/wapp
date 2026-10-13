@@ -1,0 +1,198 @@
+version: "2.0"
+domain: "Datavizbi / Positivo Tecnologia - dw_positivo"
+
+scopes:
+  prf:
+    name: "Polícia Rodoviária Federal (PRF)"
+    primary_view: "dw_positivo.vw_bi_tickets_prf"
+    description: "Chamados técnicos e de TI da PRF gerenciados via GLPI."
+    synonyms:
+      - "prf"
+      - "dprf"
+      - "policia rodoviaria"
+      - "polícia rodoviária"
+      - "rodoviaria federal"
+    columns:
+      ticket_id: "Identificador numérico do ticket"
+      titulo: "Assunto / descrição resumida do chamado"
+      data_abertura: "Timestamp de abertura do chamado"
+      data_fechamento: "Timestamp de encerramento do chamado"
+      status: "Estado ('FECHADO', 'SOLUCIONADO', 'NOVO', 'ATRIBUIDO', 'PENDENTE')"
+      fl_encerrado: "Booleano: true se fechado/solucionado, false se aberto"
+      prioridade: "Nível de prioridade de 1 (muito baixa) a 5 (crítica)"
+      categoria: "Categoria de atendimento"
+      grupo: "Grupo ou fila técnica responsável"
+      solicitante: "Nome do usuário solicitante"
+      analista: "Técnico responsável pelo atendimento"
+      localidade: "Unidade física ou delegacia da PRF"
+      tempo_atendimento_segundos: "Duração do atendimento em segundos"
+
+  incra:
+    name: "INCRA (Cervello)"
+    primary_view: "dw_positivo.vw_bi_chamados_incra"
+    description: "Chamados de atendimento técnico do INCRA gerenciados pela plataforma Cervello."
+    synonyms:
+      - "incra"
+      - "cervello"
+      - "reforma agraria"
+      - "colonizacao"
+    columns:
+      chamado_id: "Identificador do chamado (ex: '54550')"
+      data_abertura: "Timestamp de abertura (já tratado)"
+      data_fechamento: "Timestamp de encerramento (null se aberto)"
+      favorecido: "Nome do beneficiário/solicitante"
+      departamento: "Setor ou divisão interna do INCRA"
+      localidade: "Superintendência ou sede estadual"
+      categoria: "Categoria de atendimento (CHATBOT, HARDWARE, etc.)"
+      subcategoria: "Subcategoria detalhada (RESET DE SENHA, etc.)"
+      status: "Estado ('FECHADO', 'ABERTO', 'EM ATENDIMENTO', 'CANCELADO')"
+      fl_encerrado: "Booleano: true se fechado/cancelado, false se em aberto"
+      situacao_sla: "'Dentro SLA' ou 'Fora SLA'"
+      fl_dentro_sla: "Booleano: true se atendeu o prazo de SLA"
+      analista: "Nome do técnico responsável"
+      grupo_analista: "Grupo técnico responsável"
+
+  caesb:
+    name: "CAESB (Saneamento Ambiental)"
+    primary_view: "dw_positivo.vw_bi_tickets_caesb"
+    description: "Tickets de suporte e infraestrutura da CAESB via GLPI."
+    synonyms:
+      - "caesb"
+      - "saneamento"
+      - "agua e esgoto"
+    columns:
+      ticket_id: "Identificador numérico do ticket"
+      titulo: "Assunto do chamado"
+      data_abertura: "Timestamp de abertura"
+      data_fechamento: "Timestamp de fechamento"
+      status: "Estado do chamado"
+      fl_encerrado: "Booleano: true se fechado"
+      prioridade: "Prioridade de 1 a 5"
+      categoria: "Categoria de atendimento"
+      analista: "Técnico responsável"
+
+  dnit:
+    name: "DNIT (Infraestrutura de Transportes)"
+    primary_view: "dw_positivo.vw_bi_tickets_dnit"
+    description: "Tickets de suporte e infraestrutura do DNIT via GLPI."
+    synonyms:
+      - "dnit"
+      - "transporte"
+      - "transportes"
+      - "rodovias"
+    columns:
+      ticket_id: "Identificador numérico do ticket"
+      titulo: "Assunto / resumo do chamado"
+      data_abertura: "Timestamp de abertura"
+      data_fechamento: "Timestamp de fechamento"
+      data_solucao: "Timestamp de solução pelo técnico"
+      data_encerramento: "COALESCE(data_fechamento, data_solucao)"
+      status: "Estado ('FECHADO', 'SOLUCIONADO', 'EM ATENDIMENTO (ATRIBUIDO)', 'PENDENTE')"
+      fl_encerrado: "Booleano: true se fechado/solucionado, false se aberto"
+      prioridade: "Prioridade de 1 a 5"
+      categoria: "Categoria de atendimento"
+      grupo: "Grupo responsável"
+      solicitante: "Nome do solicitante"
+      analista: "Técnico responsável pelo atendimento"
+      localidade: "Unidade ou superintendência regional do DNIT"
+      tempo_atendimento_segundos: "Duração do atendimento em segundos"
+
+  dpu:
+    name: "DPU (Defensoria Pública da União)"
+    primary_view: "dw_positivo.vw_bi_tickets_dpu"
+    description: "Tickets de suporte e infraestrutura da DPU via GLPI."
+    synonyms:
+      - "dpu"
+      - "defensoria"
+      - "defensoria publica"
+    columns:
+      ticket_id: "Identificador numérico do ticket"
+      titulo: "Assunto do chamado"
+      data_abertura: "Timestamp de abertura"
+      data_fechamento: "Timestamp de fechamento"
+      data_solucao: "Timestamp de solução"
+      status: "Estado do chamado"
+      fl_encerrado: "Booleano: true se fechado"
+      analista: "Técnico responsável"
+
+  fnde:
+    name: "FNDE (Fundo Nacional de Desenvolvimento da Educação)"
+    primary_view: "dw_positivo.vw_bi_tickets_fnde"
+    description: "Tickets de suporte do FNDE via GLPI."
+    synonyms:
+      - "fnde"
+      - "educacao"
+    columns:
+      ticket_id: "Identificador do ticket"
+      status: "Estado do chamado"
+      fl_encerrado: "Booleano: true se fechado"
+      analista: "Técnico responsável"
+
+  mj:
+    name: "Ministério da Justiça (MJ / Citsmart)"
+    primary_view: "dw_positivo.vw_bi_tickets_mj"
+    description: "Chamados do Ministério da Justiça registrados via Citsmart."
+    synonyms:
+      - "mj"
+      - "ministerio da justica"
+      - "ministério da justiça"
+      - "justica"
+    columns:
+      ticket_id: "Identificador do ticket"
+      titulo: "Resumo do chamado"
+      data_abertura: "Data de abertura"
+      status: "Estado do chamado"
+      fl_encerrado: "Booleano: true se fechado"
+      analista: "Técnico responsável"
+
+  telefonia:
+    name: "Telefonia / Central de Atendimento"
+    primary_view: "dw_positivo.vw_bi_telefonia_resumo"
+    description: "Consolidado diário de chamadas telefônicas recebidas pelo suporte (atendidas e perdidas)."
+    synonyms:
+      - "telefonia"
+      - "ligações"
+      - "ligacoes"
+      - "chamadas"
+      - "call center"
+      - "atendidas"
+      - "perdidas"
+      - "taxa de perda"
+      - "abandono"
+    columns:
+      data: "Data da medição (date)"
+      operacao: "Nome do contrato (ex: 'INCRA', 'DPU', 'PRF')"
+      total_atendidas: "Contagem de chamadas atendidas"
+      total_perdidas: "Contagem de chamadas abandonadas/perdidas"
+      total_chamadas: "Volume total de chamadas recebidas"
+      taxa_perda_percentual: "Percentual de ligações perdidas"
+
+  glpi_geral:
+    name: "GLPI Geral (Outros Contratos)"
+    primary_view: "dw_positivo.vw_bi_glpi_tickets"
+    description: "Tickets gerais de operações do GLPI (UFBA, DNIT, DPU, ANTAQ, etc.)."
+    synonyms:
+      - "glpi"
+      - "tickets ti"
+      - "chamados ti"
+      - "suporte geral"
+    columns:
+      ticket_id: "Identificador do ticket"
+      contrato: "Nome da operação (ex: 'UFBA', 'DNIT', 'DPU')"
+      titulo: "Assunto do ticket"
+      data_abertura: "Data de abertura"
+      status: "Status do ticket"
+      fl_encerrado: "true se finalizado"
+
+business_rules:
+  temporal:
+    hoje: "data_abertura >= CURRENT_DATE"
+    este_mes: "data_abertura >= DATE_TRUNC('month', CURRENT_DATE)"
+    mes_passado: "data_abertura >= DATE_TRUNC('month', CURRENT_DATE - INTERVAL '1 month') AND data_abertura < DATE_TRUNC('month', CURRENT_DATE)"
+    ultimos_30_dias: "data_abertura >= CURRENT_DATE - INTERVAL '30 days'"
+  status:
+    aberto: "fl_encerrado = false"
+    fechado: "fl_encerrado = true"
+  sla:
+    dentro_sla: "fl_dentro_sla = true"
+    fora_sla: "fl_dentro_sla = false"
